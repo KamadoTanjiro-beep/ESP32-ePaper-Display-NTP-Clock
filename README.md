@@ -11,7 +11,7 @@
    
 ## UPCOMING FEATURES
 1. Will update schematics.
-2. Web based Weather Station configurations or Settings.
+2. Web based configurations or Settings.
 3. Dark Or Light modes.
 4. Way to switch battery voltage display
 5. Battery icon
