@@ -11,6 +11,8 @@ Supports 5V 1A charging with options upto 2A.
 
 All USB-C operation.
 
+This clock does not runs on GxEPD2 Library, while making this clock, this display was not supported. This runs on OEM provided basic library.
+
 Battery life: To be updated.
 ## Picture(s)
 
