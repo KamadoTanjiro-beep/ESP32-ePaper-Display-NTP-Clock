@@ -7,6 +7,8 @@ The clock runs on a 6000mAh LiFePO4 cell ( :leaves: :leaves: Eco-Friendly af!). 
 
 Also, it houses a LUX sensor (BH1750) for sleeping while it is dark (E-paper doesn't have a backlight, remember?) ( :leaves: :leaves: :leaves: Eco-Friendly af faka fak!)
 
+Made of old delivery card boards. :exploding_head: One-Punch Eco-Friendly Boost Ultra Pro Max :leaves: to :infinity:
+
 Supports 5V 1A charging with options upto 2A.
 
 All USB-C operation.
