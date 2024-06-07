@@ -1,5 +1,5 @@
 
-# Minimalistic E-Paper Display NTP-RTC Clock
+# Minimalistic E-Paper 3.52inch Display NTP-RTC Clock
 
 Clock based on Waveshare 3.52inch e-Paper HAT, 360 × 240. :leaves: Eco-Friendly!
 
