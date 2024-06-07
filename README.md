@@ -3,9 +3,9 @@
 
 Clock based on Waveshare 3.52inch e-Paper HAT, 360 × 240. :leaves: Eco-Friendly!
 
-The clock runs on a 6000mAh LiFePO4 cell (:leaves: :leaves:Eco-Friendly af!). There is an RTC for super power saving operation, and everyday at a particular time it connects to NTP and updates itself. 
+The clock runs on a 6000mAh LiFePO4 cell ( :leaves: :leaves: Eco-Friendly af!). There is an RTC for super power saving operation, and everyday at a particular time it connects to NTP and updates itself. 
 
-Also, it houses a LUX sensor (BH1750) for sleeping while it is dark (E-paper doesn't have a backlight, remember?) (:leaves: :leaves: :leaves: Eco-Friendly af faka fak!)
+Also, it houses a LUX sensor (BH1750) for sleeping while it is dark (E-paper doesn't have a backlight, remember?) ( :leaves: :leaves: :leaves: Eco-Friendly af faka fak!)
 
 Supports 5V 1A charging with options upto 2A.
 
