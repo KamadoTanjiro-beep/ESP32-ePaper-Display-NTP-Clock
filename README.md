@@ -39,5 +39,5 @@ Battery life: To be updated.
 
 ## License
 
-Distribute it freely but link back to this project or put some good words or attributes or donate (paypal link in profile haha. You are own your own, I take no resposibility, if this thing explodes or does any damage on anything.
+Distribute it freely but link back to this project or put some good words or attributes or donate (paypal link in profile) haha. You are own your own, I take no resposibility, if this thing explodes or does any damage on anything.
 
