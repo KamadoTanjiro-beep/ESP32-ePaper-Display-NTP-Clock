@@ -7,7 +7,7 @@
 3. Shows battery percentage and voltage
 4. Updates after every 60 secs and sleeps for the rest.
 5. Read below
-6. Mamoth 6000mAh battery! (Your personal choice though)
+6. Mammoth 6000mAh battery! (Your personal choice though)
    
 ## UPCOMING FEATURES
 1. Will update schematics.
