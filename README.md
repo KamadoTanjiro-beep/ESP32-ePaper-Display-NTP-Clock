@@ -1,6 +1,21 @@
 
 # Minimalistic E-Paper 3.52inch Display NTP-RTC Clock
 
+## FEATURES V1.0.0 (New Features Coming Soon (Might take a year or so))
+1. Minimalistic design
+2. Big Icons
+3. Shows battery percentage and voltage
+4. Updates after every 60 secs and sleeps for the rest.
+5. Read below
+   
+## UPCOMING FEATURES
+1. Will update schematics.
+2. Web based Weather Station configurations or Settings.
+3. Dark Or Light modes.
+4. Way to switch battery voltage display
+5. Battery icon
+6. (If you can optimise it further then let me know)
+   
 Clock based on Waveshare 3.52inch e-Paper HAT, 360 × 240. :leaves: Eco-Friendly!
 
 The clock runs on a 6000mAh LiFePO4 cell ( :leaves: :leaves: Eco-Friendly af!). There is an RTC for super power saving operation, and everyday at a particular time it connects to NTP and updates itself. 
@@ -23,5 +38,5 @@ Battery life: To be updated.
 
 ## License
 
-Distribute it freely but link back to this project or put some good words haha. You are own your own, I take no resposibility, if this thing explodes or does any damage on anything.
+Distribute it freely but link back to this project or put some good words or attributes or donate (paypal link in profile haha. You are own your own, I take no resposibility, if this thing explodes or does any damage on anything.
 
