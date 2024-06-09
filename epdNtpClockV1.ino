@@ -79,10 +79,16 @@ void disableWiFi() {
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  pinMode(BATPIN, INPUT);
-  disableWiFi();
+  pinMode(BATPIN, INPUT);  
   Wire.begin();
   Wire.setClock(400000);  // Set clock speed to be the fastest for better communication (fast mode)
+  disableWiFi();
+
+  if (!rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    //showMsg("RTC Error");
+    errFlag = true;
+  }
 
   if (lightMeter.begin(BH1750::ONE_TIME_HIGH_RES_MODE)) {
     Serial.println(F("BH1750 Advanced begin"));
@@ -134,11 +140,6 @@ void setup() {
 
     float tempBattLevel = battLevel;
 
-    if (!rtc.begin()) {
-      Serial.println("Couldn't find RTC");
-      //showMsg("RTC Error");
-      errFlag = true;
-    }
     DateTime now = rtc.now();
     Serial.println(now.month(), DEC);
     Serial.println(now.day(), DEC);
@@ -147,9 +148,9 @@ void setup() {
     Serial.println(now.second(), DEC);
     Serial.println(now.year(), DEC);
 
-    if (now.hour() == 18 && (now.minute() == 0 || now.minute() == 1)) {  //updates time in RTC everyday taking from NTP
+    if (rtc.lostPower() || (now.hour() == 18 && (now.minute() == 0 || now.minute() == 1))) {  //updates time in RTC everyday taking from NTP
       enableWiFi();
-      delay(100);
+      delay(50);
       if (WiFi.status() == WL_CONNECTED) {
         timeClient.begin();
         timeClient.update();
@@ -233,7 +234,7 @@ void setup() {
   //Go to sleep now
   Serial.println("Going to sleep now");
   Serial.flush();
-  delay(100);
+  delay(50);
   esp_deep_sleep_start();
 }
 
