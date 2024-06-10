@@ -1,7 +1,7 @@
 #include <SPI.h>
-#include "EPD_3in52.h"
-#include "imagedata.h"
-#include "epdpaint.h"
+#include "src/EPD_3in52.h"
+#include "src/imagedata.h"
+#include "src/epdpaint.h"
 
 #include <Wire.h>
 #include "RTClib.h"
@@ -79,7 +79,7 @@ void disableWiFi() {
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  pinMode(BATPIN, INPUT);  
+  pinMode(BATPIN, INPUT);
   Wire.begin();
   Wire.setClock(400000);  // Set clock speed to be the fastest for better communication (fast mode)
   disableWiFi();
@@ -112,7 +112,7 @@ void setup() {
     pref.putBool("nightFlag", "");
   }
   nightFlag = pref.getBool("nightFlag", false);
-  bool tempNightFlag = nightFlag;
+  bool tempNightFlag = nightFlag, timeNeedsUpdate = false;
 
   if (lux == 0) {
     if (nightFlag == 0) {  //prevents unnecessary redrawing of same thing
@@ -148,26 +148,34 @@ void setup() {
     Serial.println(now.second(), DEC);
     Serial.println(now.year(), DEC);
 
-    if (rtc.lostPower() || (now.hour() == 18 && (now.minute() == 0 || now.minute() == 1))) {  //updates time in RTC everyday taking from NTP
+    bool timeUpdateNeeded;
+    timeUpdateNeeded = pref.getBool("timeNeedsUpdate", false);
+
+    if ((now.year() == 2070) || rtc.lostPower() || timeUpdateNeeded)
+      timeNeedsUpdate = true;
+
+    if (timeNeedsUpdate || (now.hour() == 18 && (now.minute() == 0 || now.minute() == 1))) {  //updates time in RTC everyday taking from NTP
       enableWiFi();
       delay(50);
       if (WiFi.status() == WL_CONNECTED) {
         timeClient.begin();
-        timeClient.update();
-        time_t rawtime = timeClient.getEpochTime();
-        struct tm *ti;
-        ti = localtime(&rawtime);
+        if (timeClient.update()) {
+          timeNeedsUpdate = false;
+          time_t rawtime = timeClient.getEpochTime();
+          struct tm *ti;
+          ti = localtime(&rawtime);
 
-        uint16_t year = ti->tm_year + 1900;
-        uint8_t x = year % 10;
-        year = year / 10;
-        uint8_t y = year % 10;
-        year = y * 10 + x;
+          uint16_t year = ti->tm_year + 1900;
+          uint8_t x = year % 10;
+          year = year / 10;
+          uint8_t y = year % 10;
+          year = y * 10 + x;
 
-        uint8_t month = ti->tm_mon + 1;
+          uint8_t month = ti->tm_mon + 1;
 
-        uint8_t day = ti->tm_mday;
-        rtc.adjust(DateTime(year, month, day, timeClient.getHours(), timeClient.getMinutes(), timeClient.getSeconds()));
+          uint8_t day = ti->tm_mday;
+          rtc.adjust(DateTime(year, month, day, timeClient.getHours(), timeClient.getMinutes(), timeClient.getSeconds()));
+        }
         disableWiFi();
       }
     }
@@ -221,13 +229,17 @@ void setup() {
     }
     epd.Clear();
     Serial.println("e-Paper Clear");
-    if (errFlag)
+    if (timeNeedsUpdate)
+      showMsg("Time Resync Await");
+    else if (errFlag)
       showMsg("Error");
     else
       showTime(daysOfTheWeek[now.dayOfTheWeek()], timeString, dateString, String(battLevel) + "V", percentStr);
   }
   if (tempNightFlag != nightFlag)
     pref.putBool("nightFlag", nightFlag);
+
+  pref.putBool("timeNeedsUpdate", timeNeedsUpdate);
 
   esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   Serial.println("Setup ESP32 to sleep for every " + String(TIME_TO_SLEEP / 60) + " Mins");
@@ -242,6 +254,7 @@ void loop() {
   // This will never run
 }
 
+//various error msg display function
 void showMsg(String msg) {
   epd.display_NUM(EPD_3IN52_WHITE);
   epd.lut_GC();
@@ -253,7 +266,7 @@ void showMsg(String msg) {
   Paint paint(image, 240, 360);  // width should be the multiple of 8
   paint.SetRotate(3);            // Top right (0,0)
   paint.Clear(COLORED);
-  paint.DrawStringAt(80, 100, msg.c_str(), &Font48, UNCOLORED);
+  paint.DrawStringAt(10, 100, msg.c_str(), &Font48, UNCOLORED);
 
   epd.display_part(paint.GetImage(), 0, 0, paint.GetWidth(), paint.GetHeight());
   epd.lut_GC();
@@ -264,6 +277,7 @@ void showMsg(String msg) {
   Serial.println("end");
 }
 
+//Displays time, battery info. First para is week in const char, then time in hh:mm am/pm, then date in dd/mm/yyyy, then battlevel in X.YZV, percent in XY%
 void showTime(char *w, String timeString, String dateString, String battLevel, String percent) {
   epd.display_NUM(EPD_3IN52_WHITE);
   epd.lut_GC();
