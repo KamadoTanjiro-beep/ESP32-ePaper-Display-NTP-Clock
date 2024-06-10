@@ -13,7 +13,7 @@
 1. Will update schematics.
 2. Web based configurations or Settings.
 3. Dark Or Light modes.
-4. Way to switch battery voltage display
+4. Way to remove battery voltage display from settings
 5. Battery icon
 6. (If you can optimise it further then let me know)
    
