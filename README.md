@@ -1,6 +1,17 @@
 
 # Minimalistic E-Paper 3.52inch Display NTP-RTC Clock
 
+## Hardware
+1. Xiao ESP32 C3
+2. Waveshare 3.52inch BiColor 360x240 E-paper display refresh time 1.5 secs.
+3. BH1750 (For light sensing)
+4. DS3231 (For time keeping)
+5. LiFePO4 6000mAh 3.2V Battery
+6. TP5000 2 in 1 charging module
+7. 1 BMS (2.5V Low Cutoff)
+8. USB C breakout or any receiving board
+9. Other stuffs like wire, capacitor (104), resistor (1M Ohm), connectors, switch, LED (1) etc.
+
 ## FEATURES V1.0.0 (New Features Coming Soon (Might take a year or so))
 1. Minimalistic design
 2. Big Icons
@@ -34,7 +45,7 @@ This clock does not runs on GxEPD2 Library (while making this clock, this displa
 Battery life: 06/06/2024 Last Full Charge (Will update once empty).
 ## Picture(s)
 
-![Clock](https://github.com/KamadoTanjiro-beep/E-Paper-Display-NTP-Clock/blob/main/epdClock.jpg)
+![Clock](https://github.com/KamadoTanjiro-beep/E-Paper-Display-NTP-Clock/blob/main/src/epdClock.jpg)
 
 
 ## License
