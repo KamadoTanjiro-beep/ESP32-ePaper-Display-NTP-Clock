@@ -12,6 +12,9 @@
 8. USB C breakout or any receiving board
 9. Other stuffs like wire, capacitor (104), resistor (1M Ohm), connectors, switch, LED (1) etc.
 
+## FEATURES V1.0.1 
+1. Battery Icon
+
 ## FEATURES V1.0.0 (New Features Coming Soon (Might take a year or so))
 1. Minimalistic design
 2. Big Icons
