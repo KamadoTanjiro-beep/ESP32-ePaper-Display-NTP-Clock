@@ -24,8 +24,8 @@
 1. Will update schematics.
 2. Web based configurations or Settings.
 3. Dark Or Light modes.
-4. Way to remove battery voltage display from settings <br>
-~~5. Battery icon~~
+4. Way to remove battery voltage display from settings
+5. ~~Battery icon~~
 6. (If you can optimise it further then let me know)
    
 Clock based on Waveshare 3.52inch e-Paper HAT, 360 × 240. :leaves: Eco-Friendly!
