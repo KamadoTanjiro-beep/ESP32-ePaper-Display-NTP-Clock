@@ -42,7 +42,9 @@ All USB-C operation.
 
 This clock does not runs on GxEPD2 Library (while making this clock, this display was not supported). This runs on OEM provided basic library.
 
-Battery life: 06/06/2024 Last Full Charge (Will update once empty).
+Battery life: 
+a. Full: 06/06/2024, Dead: (Will update once empty).
+
 ## Picture(s)
 
 ![Clock](https://github.com/KamadoTanjiro-beep/E-Paper-Display-NTP-Clock/blob/main/src/epdClock.jpg)
