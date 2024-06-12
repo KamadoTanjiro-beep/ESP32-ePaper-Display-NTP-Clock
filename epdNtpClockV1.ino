@@ -188,7 +188,7 @@ void setup() {
     if (((newBattLevel - battLevel) >= 0.2) || newBattLevel > 3.5)  //to update the battery level in case of charging
       battLevel = newBattLevel;
 
-    int percent = ((battLevel - 2.7) / 0.7) * 100;  //range is 3.4v-100% and 2.7v-0%
+    byte percent = ((battLevel - 2.7) / 0.7) * 100;  //range is 3.4v-100% and 2.7v-0%
     if (percent < 1)
       percent = 1;
     else if (percent > 100)
@@ -234,25 +234,26 @@ void setup() {
     else if (errFlag)
       showMsg("Error");
     else
-      showTime(daysOfTheWeek[now.dayOfTheWeek()], timeString, dateString, String(battLevel) + "V", percentStr);
+      showTime(daysOfTheWeek[now.dayOfTheWeek()], timeString, dateString, String(battLevel) + "V", percentStr, percent);
   }
   if (tempNightFlag != nightFlag)
     pref.putBool("nightFlag", nightFlag);
 
   pref.putBool("timeNeedsUpdate", timeNeedsUpdate);
 
-  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
+  //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   Serial.println("Setup ESP32 to sleep for every " + String(TIME_TO_SLEEP / 60) + " Mins");
   //Go to sleep now
   Serial.println("Going to sleep now");
   Serial.flush();
   delay(50);
-  esp_deep_sleep_start();
+  //esp_deep_sleep_start();
 }
 
 void loop() {
   // This will never run
 }
+
 
 //various error msg display function
 void showMsg(String msg) {
@@ -278,7 +279,7 @@ void showMsg(String msg) {
 }
 
 //Displays time, battery info. First para is week in const char, then time in hh:mm am/pm, then date in dd/mm/yyyy, then battlevel in X.YZV, percent in XY%
-void showTime(char *w, String timeString, String dateString, String battLevel, String percent) {
+void showTime(char *w, String timeString, String dateString, String battLevel, String percentStr, byte percent) {
   epd.display_NUM(EPD_3IN52_WHITE);
   epd.lut_GC();
   epd.refresh();
@@ -288,13 +289,35 @@ void showTime(char *w, String timeString, String dateString, String battLevel, S
 
   Paint paint(image, 240, 360);  // width should be the multiple of 8
   paint.SetRotate(3);            // Top right (0,0)
-  paint.Clear(COLORED);
+  paint.Clear(UNCOLORED);
 
-  paint.DrawStringAt(325, 5, percent.c_str(), &Font12, UNCOLORED);
-  paint.DrawStringAt(280, 5, battLevel.c_str(), &Font12, UNCOLORED);
-  paint.DrawStringAt(60, 30, w, &Font48, UNCOLORED);
-  paint.DrawStringAt(60, 100, timeString.c_str(), &Font48, UNCOLORED);
-  paint.DrawStringAt(60, 170, dateString.c_str(), &Font48, UNCOLORED);
+  //Battery icon
+  paint.DrawRectangle(10, 4, 26, 12, COLORED);
+  paint.DrawRectangle(8, 6, 10, 10, COLORED);
+  
+  if (percent >= 95)  //Full
+    paint.DrawFilledRectangle(11, 4, 25, 11, COLORED);
+  else if (percent >= 85 && percent < 95)  //ful-Med
+    paint.DrawFilledRectangle(13, 4, 25, 11, COLORED);
+  else if (percent >= 70 && percent < 85)  //Med
+    paint.DrawFilledRectangle(15, 4, 25, 11, COLORED);
+    else if (percent > 50 && percent < 70)  //Med-half
+    paint.DrawFilledRectangle(17, 4, 25, 11, COLORED);
+  else if (percent > 30 && percent <= 50)  //half
+    paint.DrawFilledRectangle(19, 4, 25, 11, COLORED);
+    else if (percent > 10 && percent <= 30)  //low-half
+    paint.DrawFilledRectangle(21, 4, 25, 11, COLORED);
+  else if (percent > 5 && percent <= 10)  //low
+    paint.DrawFilledRectangle(23, 4, 25, 11, COLORED);
+  else if (percent > 2 && percent <= 5)  //critical-low
+    paint.DrawFilledRectangle(25, 4, 25, 11, COLORED);   
+  //END Battery ICON
+
+  paint.DrawStringAt(325, 5, percentStr.c_str(), &Font12, COLORED);
+  paint.DrawStringAt(280, 5, battLevel.c_str(), &Font12, COLORED);
+  paint.DrawStringAt(60, 30, w, &Font48, COLORED);
+  paint.DrawStringAt(60, 100, timeString.c_str(), &Font48, COLORED);
+  paint.DrawStringAt(60, 170, dateString.c_str(), &Font48, COLORED);
 
   epd.display_part(paint.GetImage(), 0, 0, paint.GetWidth(), paint.GetHeight());
   epd.lut_GC();
