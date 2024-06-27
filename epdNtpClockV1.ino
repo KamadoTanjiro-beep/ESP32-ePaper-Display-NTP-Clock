@@ -241,13 +241,13 @@ void setup() {
 
   pref.putBool("timeNeedsUpdate", timeNeedsUpdate);
 
-  //esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
+  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP * uS_TO_S_FACTOR);
   Serial.println("Setup ESP32 to sleep for every " + String(TIME_TO_SLEEP / 60) + " Mins");
   //Go to sleep now
   Serial.println("Going to sleep now");
   Serial.flush();
   delay(50);
-  //esp_deep_sleep_start();
+  esp_deep_sleep_start();
 }
 
 void loop() {
