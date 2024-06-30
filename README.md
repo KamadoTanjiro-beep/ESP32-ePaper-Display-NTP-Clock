@@ -24,12 +24,7 @@
 6. Mammoth 6000mAh battery! (Your personal choice though)
    
 ## UPCOMING FEATURES
-1. Will update schematics.
-2. Web based configurations or Settings.
-3. Dark Or Light modes.
-4. Way to remove battery voltage display from settings
-5. ~~Battery icon~~
-6. (If you can optimise it further then let me know)
+Check [issues](https://github.com/KamadoTanjiro-beep/E-Paper-Display-NTP-Clock/issues)
    
 Clock based on Waveshare 3.52inch e-Paper HAT, 360 × 240. :leaves: Eco-Friendly!
 
