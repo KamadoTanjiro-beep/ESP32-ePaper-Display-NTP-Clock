@@ -17,11 +17,12 @@
 
 ## FEATURES V1.0.0 (New Features Coming Soon (Might take a year or so))
 1. Minimalistic design
-2. Big Icons
-3. Shows battery percentage and voltage
-4. Updates after every 60 secs and sleeps for the rest.
-5. Read below
-6. Mammoth 6000mAh battery! (Your personal choice though)
+2. Auto-updates internal clock everyday (wifi connectivity needed)
+3. Big Icons
+4. Shows battery percentage and voltage
+5. Updates after every 60 secs and sleeps for the rest.
+6. Read below
+7. Mammoth 6000mAh battery! (Your personal choice though)
    
 ## UPCOMING FEATURES
 Check [issues](https://github.com/KamadoTanjiro-beep/E-Paper-Display-NTP-Clock/issues)
