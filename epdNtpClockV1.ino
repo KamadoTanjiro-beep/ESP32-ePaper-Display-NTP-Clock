@@ -140,6 +140,8 @@ void setup() {
 
     float tempBattLevel = battLevel;
 
+    byte temp = int(rtc.getTemperature());
+
     DateTime now = rtc.now();
     Serial.println(now.month(), DEC);
     Serial.println(now.day(), DEC);
@@ -234,7 +236,7 @@ void setup() {
     else if (errFlag)
       showMsg("Error");
     else
-      showTime(daysOfTheWeek[now.dayOfTheWeek()], timeString, dateString, String(battLevel) + "V", percentStr, percent);
+      showTime(daysOfTheWeek[now.dayOfTheWeek()], timeString, dateString, String(battLevel) + "V", percentStr, percent/*for battery icon*/, String(temp)+"C");
   }
   if (tempNightFlag != nightFlag)
     pref.putBool("nightFlag", nightFlag);
@@ -279,7 +281,7 @@ void showMsg(String msg) {
 }
 
 //Displays time, battery info. First para is week in const char, then time in hh:mm am/pm, then date in dd/mm/yyyy, then battlevel in X.YZV, percent in XY%
-void showTime(char *w, String timeString, String dateString, String battLevel, String percentStr, byte percent) {
+void showTime(char *w, String timeString, String dateString, String battLevel, String percentStr, byte percent, String temp) {
   epd.display_NUM(EPD_3IN52_WHITE);
   epd.lut_GC();
   epd.refresh();
@@ -294,28 +296,30 @@ void showTime(char *w, String timeString, String dateString, String battLevel, S
   //Battery icon
   paint.DrawRectangle(10, 4, 26, 12, COLORED);
   paint.DrawRectangle(8, 6, 10, 10, COLORED);
-  
+
   if (percent >= 95)  //Full
     paint.DrawFilledRectangle(11, 4, 25, 11, COLORED);
   else if (percent >= 85 && percent < 95)  //ful-Med
     paint.DrawFilledRectangle(13, 4, 25, 11, COLORED);
   else if (percent >= 70 && percent < 85)  //Med
     paint.DrawFilledRectangle(15, 4, 25, 11, COLORED);
-    else if (percent > 50 && percent < 70)  //Med-half
+  else if (percent > 50 && percent < 70)  //Med-half
     paint.DrawFilledRectangle(17, 4, 25, 11, COLORED);
   else if (percent > 30 && percent <= 50)  //half
     paint.DrawFilledRectangle(19, 4, 25, 11, COLORED);
-    else if (percent > 10 && percent <= 30)  //low-half
+  else if (percent > 10 && percent <= 30)  //low-half
     paint.DrawFilledRectangle(21, 4, 25, 11, COLORED);
   else if (percent > 5 && percent <= 10)  //low
     paint.DrawFilledRectangle(23, 4, 25, 11, COLORED);
   else if (percent > 2 && percent <= 5)  //critical-low
-    paint.DrawFilledRectangle(25, 4, 25, 11, COLORED);   
+    paint.DrawFilledRectangle(25, 4, 25, 11, COLORED);
   //END Battery ICON
 
   paint.DrawStringAt(325, 5, percentStr.c_str(), &Font12, COLORED);
   paint.DrawStringAt(280, 5, battLevel.c_str(), &Font12, COLORED);
   paint.DrawStringAt(60, 30, w, &Font48, COLORED);
+  paint.DrawStringAt(295, 50, temp.c_str(), &Font24, COLORED);
+  paint.DrawStringAt(327, 47, "o", &Font8, COLORED);
   paint.DrawStringAt(60, 100, timeString.c_str(), &Font48, COLORED);
   paint.DrawStringAt(60, 170, dateString.c_str(), &Font48, COLORED);
 
